@@ -26,7 +26,7 @@ module Compass
       def configuration
         config = Compass::Configuration::Data.new('rails')
         config.extend(ConfigurationDefaults)
-        config.extend(ConfigurationDefaultsWithAssetPipeline) if Sass::Util.ap_geq?('3.1.0') || Sass::Util.ap_geq?('3.1.0.rc') || Sass::Util.ap_geq?('3.1.0.beta')
+        config.extend(ConfigurationDefaultsWithAssetPipeline) if (Sass::Util.ap_geq?('3.1.0') || Sass::Util.ap_geq?('3.1.0.rc') || Sass::Util.ap_geq?('3.1.0.beta')) 
         config
       end
 
@@ -59,13 +59,13 @@ module Compass
       end
 
       def sass_plugin_enabled?
-        unless Sass::Util.ap_geq?('3.1.0.beta')
-          defined?(Sass::Plugin) && !Sass::Plugin.options[:never_update]
+        unless Sass::Util.ap_geq?('3.1.0.beta') && Rails.application.config.assets.enabled
+          defined?(Sass::Plugin) && !Sass::Plugin.options[:never_update] 
         end
       end
 
       def rails_compilation_enabled?
-        Sass::Util.ap_geq?('3.1.0.beta') && defined?(Sass::Rails) # XXX check if there's some other way(s) to disable the asset pipeline.
+        Sass::Util.ap_geq?('3.1.0.beta') && defined?(Sass::Rails) && ::Rails.application.config.assets.enabled # XXX check if there's some other way(s) to disable the asset pipeline.
       end
 
       # Rails 2.x projects use this in their compass initializer.

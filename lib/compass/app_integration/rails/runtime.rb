@@ -3,7 +3,7 @@ unless defined?(Compass::RAILS_LOADED)
   begin
     require 'action_pack/version'
     if ActionPack::VERSION::MAJOR >= 3
-      if ActionPack::VERSION::MINOR < 1
+      if ActionPack::VERSION::MINOR < 9
         require 'compass/app_integration/rails/actionpack30'
       else
         require 'compass/app_integration/rails/actionpack31'
